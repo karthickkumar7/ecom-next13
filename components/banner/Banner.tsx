@@ -51,7 +51,7 @@ function Banner() {
                     </div>
                 </Slider>
             </div>
-            <div className="w-1/3 rounded-lg border-[1px] border-gray-200 shadow-md p-4 flex flex-col justify-between">
+            <div className="w-1/3 rounded-lg h-[410px] border-[1px] border-gray-200 shadow-md p-4 flex flex-col justify-between">
                 <div className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold text-black">
                         Fresh pick of the day!
@@ -66,7 +66,7 @@ function Banner() {
                         width={400}
                         className="h-60 object-contain"
                     />
-                    <button className="px-2 py-1 rounded-full text-white bg-blue-600">
+                    <button className="px-4 py-2 font-semibold rounded-full text-white bg-blue-600">
                         Options
                     </button>
                     <p className="text-lg font-semibold">
