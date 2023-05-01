@@ -1,14 +1,15 @@
 import Banner from '@/components/banner/Banner';
+import Categories from '@/components/Categories';
 import Navbar from '@/components/navbar/Navbar';
 import FeaturedProductCard from '@/components/products/FeaturedProductCard';
 import ProductCard from '@/components/products/ProductCard';
+import { Product } from '@/types';
 import axios from 'axios';
 import { GetServerSideProps } from 'next';
-import Image from 'next/image';
-import { Data } from './api/products';
 
 interface Props {
-    data: Data;
+    data: Product[];
+    featured: Product[];
 }
 
 export default function Home(props: Props) {
@@ -27,67 +28,17 @@ export default function Home(props: Props) {
                             <p className="cursor-pointer">see more</p>
                         </div>
                         <div className="flex gap-4">
-                            <FeaturedProductCard />
-                            <FeaturedProductCard />
-                            <FeaturedProductCard />
-                            <FeaturedProductCard />
-                            <FeaturedProductCard />
+                            {props.featured.map((product) => (
+                                <FeaturedProductCard
+                                    key={product._id}
+                                    title={product.title}
+                                    description={product.description}
+                                    image={product.image}
+                                />
+                            ))}
                         </div>
                     </section>
-
-                    {/* CATEGORIES */}
-                    <section className="w-full h-[610px] flex flex-col justify-between">
-                        <div className="flex items-center justify-between">
-                            <h4 className="text-xl font-semibold">
-                                Categories
-                            </h4>
-                            <p>see more</p>
-                        </div>
-                        <div className="grid grid-cols-3 gap-2 min-h-[250px]">
-                            <section className="col-span-2 relative">
-                                <Image
-                                    src={'/assets/men.jpg'}
-                                    alt="men"
-                                    height={80}
-                                    width={200}
-                                    className="object-cover w-full h-full"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-blue-500"></div>
-                            </section>
-                            <section className="relative">
-                                <Image
-                                    src={'/assets/women.jpg'}
-                                    alt="women"
-                                    height={80}
-                                    width={120}
-                                    className="object-cover w-full h-full"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-pink-500"></div>
-                            </section>
-                            <section className="relative">
-                                <Image
-                                    src={'/assets/elec.jpg'}
-                                    alt="women"
-                                    height={80}
-                                    width={120}
-                                    className="object-cover w-full h-full"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-zinc-500"></div>
-                            </section>
-
-                            <section className="col-span-2 relative">
-                                <Image
-                                    src={'/assets/groceries.jpg'}
-                                    alt="groc"
-                                    height={80}
-                                    width={200}
-                                    className="object-cover w-full h-full"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-green-500"></div>
-                            </section>
-                        </div>
-                    </section>
-
+                    <Categories />
                     {/* PRODUCTS */}
                     <section className="mt-4 flex flex-wrap gap-4">
                         {props.data.map((product) => (
@@ -96,6 +47,8 @@ export default function Home(props: Props) {
                                 title={product.title}
                                 description={product.description}
                                 image={product.image}
+                                price={product.price}
+                                oldPrice={product.oldPrice}
                             />
                         ))}
                     </section>
@@ -108,9 +61,12 @@ export default function Home(props: Props) {
 export const getServerSideProps: GetServerSideProps = async () => {
     const { data } = await axios.get('http://localhost:3000/api/products');
 
+    const featured = data.filter((prod: Product) => prod.featured);
+
     return {
         props: {
             data,
+            featured,
         },
     };
 };

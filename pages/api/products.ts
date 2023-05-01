@@ -1,29 +1,48 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { Product } from '@/types';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export type Data = {
-    _id: number;
-    title: string;
-    description: string;
-    oldPrice: number;
-    price: number;
-    brand: string;
-    image: string;
-    isNew: boolean;
-    category: string;
-}[];
+type Data = Product[];
+
 const productData = [
     {
         _id: 101,
-        title: 'Canon EOS Rebel T100',
+        title: 'Men Black Comfy Fit',
         description:
-            'Canon EOS Rebel T100 Digital SLR Camera with 18-55mm Lens Kit, 18 Megapixel Sensor, Wi-Fi, DIGIC4+, SanDisk 32GB Memory Card and Live View Shooting',
+            'Shoefly Men Shoes Black (1235) Latest Collection Comfortable Formal Shoes for Men',
         oldPrice: 700.0,
         price: 559.99,
         brand: 'Canon',
-        image: 'https://i.ibb.co/1r28gMk/1.webp',
+        image: '/images/men_shoe_black.jpg',
         isNew: true,
         category: 'Electronics',
+        featured: false,
+    },
+    {
+        _id: 121,
+        title: 'Canon EOS Rebel T100',
+        description:
+            'Canon EOS Rebel T100 Digital SLR Camera with 18-55mm Lens Kit, 18 Megapixel Sensor, Wi-Fi, DIGIC4+, SanDisk 32GB Memory Card and Live View Shooting',
+        oldPrice: 1599,
+        price: 1200,
+        brand: 'Shoefly',
+        image: 'https://i.ibb.co/1r28gMk/1.webp',
+        isNew: true,
+        category: 'Men',
+        featured: false,
+    },
+    {
+        _id: 122,
+        title: "Women's Casual Pink wear",
+        description:
+            "Denill Women's Textile Slip-On Lightweight Walking Gym Running Shoes",
+        oldPrice: 1800,
+        price: 1599,
+        brand: 'Denill',
+        image: '/images/women_shoe_pink.jpg',
+        isNew: true,
+        category: 'Women',
+        featured: false,
     },
 
     {
@@ -37,6 +56,7 @@ const productData = [
         image: 'https://i.ibb.co/qdfB3s6/2.webp',
         isNew: true,
         category: 'Electronics',
+        featured: false,
     },
     {
         _id: 103,
@@ -49,6 +69,7 @@ const productData = [
         image: 'https://i.ibb.co/VL1Dnv1/4.webp',
         isNew: true,
         category: 'Electronics',
+        featured: true,
     },
     {
         _id: 104,
@@ -60,6 +81,7 @@ const productData = [
         image: 'https://i.ibb.co/5F3nWv6/7.webp',
         isNew: true,
         category: 'Electronics',
+        featured: false,
     },
     {
         _id: 105,
@@ -72,6 +94,7 @@ const productData = [
         image: 'https://i.ibb.co/xgZWmdq/8.jpg',
         isNew: true,
         category: 'Electronics',
+        featured: true,
     },
     {
         _id: 106,
@@ -84,6 +107,7 @@ const productData = [
         image: 'https://i.ibb.co/rQKjVC2/5.webp',
         isNew: true,
         category: 'Electronics',
+        featured: false,
     },
     {
         _id: 107,
@@ -96,6 +120,7 @@ const productData = [
         image: 'https://i.ibb.co/Ycz8hkV/6.webp',
         isNew: true,
         category: 'Home Decoration',
+        featured: false,
     },
     {
         _id: 108,
@@ -107,7 +132,8 @@ const productData = [
         brand: 'Smartprints',
         image: 'https://i.ibb.co/BLCDw7v/3.webp',
         isNew: true,
-        category: 'Fashion',
+        category: 'Men',
+        featured: false,
     },
     {
         _id: 109,
@@ -120,6 +146,7 @@ const productData = [
         image: 'https://i.ibb.co/qCXcPhq/8.webp',
         isNew: true,
         category: 'Home Decoration',
+        featured: false,
     },
     {
         _id: 110,
@@ -131,6 +158,7 @@ const productData = [
         image: 'https://i.ibb.co/TTS9wY4/9.webp',
         isNew: true,
         category: 'Equipments',
+        featured: false,
     },
     {
         _id: 111,
@@ -142,7 +170,8 @@ const productData = [
         brand: 'Free Assembly',
         image: 'https://i.ibb.co/BVzsqvz/10.webp',
         isNew: true,
-        category: 'Fashion',
+        category: 'Women',
+        featured: false,
     },
     {
         _id: 112,
@@ -155,6 +184,7 @@ const productData = [
         image: 'https://i.ibb.co/zPDcCQY/top4.webp',
         isNew: true,
         category: 'Beauty Product',
+        featured: false,
     },
     {
         _id: 113,
@@ -167,6 +197,7 @@ const productData = [
         image: 'https://i.ibb.co/QC4L3RF/top8.jpg',
         isNew: true,
         category: 'Beauty Product',
+        featured: false,
     },
     {
         _id: 114,
@@ -179,6 +210,7 @@ const productData = [
         image: 'https://i.ibb.co/dKmw2sC/top2.webp',
         isNew: true,
         category: 'Beauty Product',
+        featured: false,
     },
     {
         _id: 115,
@@ -191,6 +223,7 @@ const productData = [
         image: 'https://i.ibb.co/sJwg0YF/top1.webp',
         isNew: true,
         category: 'Beauty Product',
+        featured: false,
     },
     {
         _id: 116,
@@ -203,6 +236,7 @@ const productData = [
         image: 'https://i.ibb.co/v1sPXLq/top5.webp',
         isNew: true,
         category: 'Beauty Product',
+        featured: false,
     },
     {
         _id: 117,
@@ -215,6 +249,7 @@ const productData = [
         image: 'https://i.ibb.co/yPJjB3r/top6.webp',
         isNew: false,
         category: 'Beauty Product',
+        featured: true,
     },
     {
         _id: 118,
@@ -227,6 +262,7 @@ const productData = [
         image: 'https://i.ibb.co/zmw8xFY/top7.webp',
         isNew: true,
         category: 'Beauty Product',
+        featured: false,
     },
     {
         _id: 119,
@@ -239,6 +275,7 @@ const productData = [
         image: 'https://i.ibb.co/vHJkwzt/top3.webp',
         isNew: false,
         category: 'Beauty Product',
+        featured: false,
     },
     {
         _id: 120,
@@ -250,7 +287,8 @@ const productData = [
         brand: 'Free Assembly',
         image: 'https://i.ibb.co/BNXTLkq/12.webp',
         isNew: false,
-        category: 'Fashion',
+        category: 'Women',
+        featured: true,
     },
 ];
 
